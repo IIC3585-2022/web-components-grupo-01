@@ -2,14 +2,11 @@ const template = document.createElement("template");
 
 template.innerHTML = `
   <style>
-    :host {
-      font-family: sans-serif;
-    }
-
     .container {
         margin: auto;
         width: 30%;
         padding: 10px;
+        font-family: sans-serif;
     }
 
     .titulo {
