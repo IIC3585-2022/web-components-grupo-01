@@ -46,6 +46,7 @@ class SellItem extends HTMLElement {
         this.shadowRoot.querySelector("#discount").innerText =  `${this.getAttribute('discount')}`;
         this.shadowRoot.querySelector("#price").innerText = `${this.getAttribute('price')}`;
         this.shadowRoot.querySelector("#discounted-price").innerText =  `${parseInt(this.getAttribute('price') * this.getAttribute('discount')/100)}`;
+        this.shadowRoot.querySelector('#toggle-info').addEventListener('click', () => this.toggleInfo());
     }
 
     toggleInfo() {
@@ -60,14 +61,6 @@ class SellItem extends HTMLElement {
             info.style.display = 'none'
             toggleButton.innerText = 'Show Info';
         }
-    }
-
-    connectedCallback() {
-        this.shadowRoot.querySelector('#toggle-info').addEventListener('click', () => this.toggleInfo());
-    }
-
-    disconnectedCallback() {
-        this.shadowRoot.querySelector('#toggle-info').removeEventListener('click', () => this.toggleInfo());
     }
 }
 
