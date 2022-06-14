@@ -14,6 +14,10 @@ template.innerHTML = `
             overflow: hidden;  /* prevents extra lines from being visible */
         }
 
+        .tachar {
+            text-decoration: line-through;
+        }
+
     </style>
     <div class="sell-item">
         <img />
@@ -21,9 +25,8 @@ template.innerHTML = `
             <h3><slot name="name" /></h3>
             <div class="info">
                 <p class="text-box"><slot name="specs" /></p>
-                <p>Descuento: <edit-word><span id=discount></span></edit-word>%</p>
-                <p>Precio normal: $<edit-word><span id="price"></edit-word></span></p>
-                <p>Precio con descuento: $<span id="discounted-price"></span></p>
+                <p><edit-word><span id=discount></span></edit-word>% DCTO.   $<span id="price" class="tachar"></span></p>
+                <p>$<span id="discounted-price"></span></p>
                 <p><slot name="rating" /></p>
             </div>
             <button id="toggle-info">Hide Info</button>
@@ -39,7 +42,6 @@ class SellItem extends HTMLElement {
 
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.appendChild(template.content.cloneNode(true))
-        //this.shadowRoot.querySelector("h3"). innerText = this.getAttribute('name');
         this.shadowRoot.querySelector('img').src = this.getAttribute('item');
         this.shadowRoot.querySelector("#discount").innerText =  `${this.getAttribute('discount')}`;
         this.shadowRoot.querySelector("#price").innerText = `${this.getAttribute('price')}`;
