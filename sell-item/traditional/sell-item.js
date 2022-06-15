@@ -6,6 +6,20 @@ template.innerHTML = `
             color: coral;
         }
 
+        p {
+            width: 20%;
+        }
+
+        .info {
+            width: 100%;
+        }
+
+        .rating {
+            width: 20%;
+            padding: 0px;
+            margin: 0px;
+        }
+
         .text-box {
             inline-size: 200px;
             overflow-wrap: break-word;
@@ -18,6 +32,10 @@ template.innerHTML = `
             text-decoration: line-through;
         }
 
+        #estrella {
+            width: 5%;
+        }
+
     </style>
     <div class="sell-item">
         <img />
@@ -27,7 +45,9 @@ template.innerHTML = `
                 <p class="text-box"><slot name="specs" /></p>
                 <p><edit-word><span id=discount></span></edit-word>% DCTO.   $<span id="price" class="tachar"></span></p>
                 <p>$<span id="discounted-price"></span></p>
-                <p><slot name="rating" /></p>
+                <div class="rating">
+                    <p>estrellas: <slot name="rating" /></p>
+                </div>
             </div>
             <button id="toggle-info">Hide Info</button>
         </div>
