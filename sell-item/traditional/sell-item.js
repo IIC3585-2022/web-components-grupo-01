@@ -6,10 +6,6 @@ template.innerHTML = `
             color: coral;
         }
 
-        p {
-            width: 20%;
-        }
-
         .info {
             width: 100%;
         }
