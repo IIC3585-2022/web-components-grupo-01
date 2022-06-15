@@ -65,7 +65,7 @@ class SellItem extends HTMLElement {
         this.shadowRoot.querySelector('img').src = this.getAttribute('item');
         this.shadowRoot.querySelector("#discount").innerText =  `${this.getAttribute('discount')}`;
         this.shadowRoot.querySelector("#price").innerText = `${this.getAttribute('price')}`;
-        this.shadowRoot.querySelector("#discounted-price").innerText =  `${parseInt(this.getAttribute('price') * this.getAttribute('discount')/100)}`;
+        this.shadowRoot.querySelector("#discounted-price").innerText =  `${Math.round(parseInt(this.getAttribute('price')) * (1- parseInt(this.getAttribute('discount'))/100), 2)}`;
         this.shadowRoot.querySelector('#toggle-info').addEventListener('click', () => this.toggleInfo());
         
         // Estrellitas
@@ -76,6 +76,19 @@ class SellItem extends HTMLElement {
         }
         const element = this.shadowRoot.querySelector("#estrellitas");
         element.innerHTML = ratingStars;
+        
+        // Actualizar descuento
+        const editword = this.shadowRoot.querySelector("edit-word")
+        editword.addEventListener("discountinput", (e) => {
+        console.log(e)
+            let value = parseInt(e.detail.newValue);
+            let discounted = Math.round(parseInt(this.getAttribute('price')) * (1 - value / 100), 2);
+            if(isNaN(discounted)) {
+                discounted = 0;
+            }
+            
+            this.shadowRoot.querySelector("#discounted-price").innerText =  `${discounted}`;
+        })
     }
 
     toggleInfo() {
@@ -113,6 +126,11 @@ class EditWord extends HTMLElement {
         input.value = this.textContent;
   
         form.appendChild(input);
+        
+        input.oninput = function(e){
+            this.dispatchEvent(new CustomEvent("discountinput", {
+        composed: true, bubbles: true, detail: { newValue: input.value } }));
+        }
         form.style.display = 'none';
         span.style.display = 'inline-block';
         input.style.width = span.clientWidth + 'px';
