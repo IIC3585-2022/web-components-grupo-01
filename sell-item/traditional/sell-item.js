@@ -17,6 +17,11 @@ template.innerHTML = `
         .tachar {
             text-decoration: line-through;
         }
+        
+        .flex {
+            display: flex;
+            flex-direction: row;
+        }
 
         #rating {
             width: 10px;
@@ -41,7 +46,8 @@ template.innerHTML = `
                 <p class="text-box"><slot name="specs" /></p>
                 <p><edit-word><span id=discount></span></edit-word>% DCTO.   $<span id="price" class="tachar"></span></p>
                 <p>$<span id="discounted-price"></span></p>
-                </p><img id="estrella" src="./../../assets/estrella.png" /><p id="rating">
+                </p>
+                <div id="estrellitas" class="flex"></div>
             </div>
             <button id="toggle-info">Hide Info</button>
         </div>
@@ -59,9 +65,17 @@ class SellItem extends HTMLElement {
         this.shadowRoot.querySelector('img').src = this.getAttribute('item');
         this.shadowRoot.querySelector("#discount").innerText =  `${this.getAttribute('discount')}`;
         this.shadowRoot.querySelector("#price").innerText = `${this.getAttribute('price')}`;
-        this.shadowRoot.querySelector("#rating").innerText = `${this.getAttribute('rating')}`;
         this.shadowRoot.querySelector("#discounted-price").innerText =  `${parseInt(this.getAttribute('price') * this.getAttribute('discount')/100)}`;
         this.shadowRoot.querySelector('#toggle-info').addEventListener('click', () => this.toggleInfo());
+        
+        // Estrellitas
+        const rating = this.getAttribute("rating");
+        let ratingStars = "";
+        for(let i = 0; i < rating; i++) {
+            ratingStars += `<img height="20" src="../../assets/estrella.png"></img>`
+        }
+        const element = this.shadowRoot.querySelector("#estrellitas");
+        element.innerHTML = ratingStars;
     }
 
     toggleInfo() {
