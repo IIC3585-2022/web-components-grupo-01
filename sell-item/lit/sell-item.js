@@ -9,6 +9,7 @@ class SellItem extends LitElement {
     price: {},
     discount: {},
     item: {},
+    rating: 0,
   };
 
   static styles = css`
@@ -27,10 +28,21 @@ class SellItem extends LitElement {
     .tachar {
         text-decoration: line-through;
     }
+    .flex-row {
+        display: flex;
+        flex-direction: row;
+    }
   `;
     constructor() {
         super();
         this.isHidden = false;
+    }
+    willUpdate() {
+        this.starHtml = html``
+        console.log(this.rating)
+        for(let i=0; i<this.rating; i++) {
+            this.starHtml = html`${this.starHtml}<img height="20" src="../../assets/estrella.png"></img>`
+        }
     }
 
     toggleInfo() {
@@ -48,7 +60,10 @@ class SellItem extends LitElement {
                 <p class="text-box"><slot name="specs" /></p>
                 <p>${this.discount}% DCTO.   $<span class="tachar">${this.price}</span></p>
                 <p>$${parseInt(this.price*this.discount/100)}</p>
-                <p><slot name="rating" /></p>
+                <div class="flex-row">
+                    <div><slot name="rating" /></div>
+                    ${this.starHtml}
+                </div>
             </div>
             <button @click=${this.toggleInfo}>${this.isHidden? 'Show Info': 'Hide Info'}</button>
         </div>
