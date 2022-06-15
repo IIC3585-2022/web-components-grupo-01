@@ -6,16 +6,6 @@ template.innerHTML = `
             color: coral;
         }
 
-        .info {
-            width: 100%;
-        }
-
-        .rating {
-            width: 20%;
-            padding: 0px;
-            margin: 0px;
-        }
-
         .text-box {
             inline-size: 200px;
             overflow-wrap: break-word;
@@ -28,8 +18,18 @@ template.innerHTML = `
             text-decoration: line-through;
         }
 
+        #rating {
+            width: 10px;
+            margin-left: 10px;:
+            padding: 0px;
+            display:inline;
+        }
+
         #estrella {
             width: 5%;
+            margin: 0;
+            padding: 0;
+            display:inline;
         }
 
     </style>
@@ -41,9 +41,7 @@ template.innerHTML = `
                 <p class="text-box"><slot name="specs" /></p>
                 <p><edit-word><span id=discount></span></edit-word>% DCTO.   $<span id="price" class="tachar"></span></p>
                 <p>$<span id="discounted-price"></span></p>
-                <div class="rating">
-                    <p>estrellas: <slot name="rating" /></p>
-                </div>
+                </p><img id="estrella" src="./../../assets/estrella.png" /><p id="rating">
             </div>
             <button id="toggle-info">Hide Info</button>
         </div>
@@ -61,6 +59,7 @@ class SellItem extends HTMLElement {
         this.shadowRoot.querySelector('img').src = this.getAttribute('item');
         this.shadowRoot.querySelector("#discount").innerText =  `${this.getAttribute('discount')}`;
         this.shadowRoot.querySelector("#price").innerText = `${this.getAttribute('price')}`;
+        this.shadowRoot.querySelector("#rating").innerText = `${this.getAttribute('rating')}`;
         this.shadowRoot.querySelector("#discounted-price").innerText =  `${parseInt(this.getAttribute('price') * this.getAttribute('discount')/100)}`;
         this.shadowRoot.querySelector('#toggle-info').addEventListener('click', () => this.toggleInfo());
     }
